@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Mail SILENTSYSTEM®</title>
+  <meta name="description" content="Componi le mail SILENTSYSTEM: offerta di noleggio o acquisto, reso guasti e ritiro del noleggio. Copia testo o HTML, oppure apri il messaggio nel programma di posta.">
+  <meta name="theme-color" content="#f6f3ea">
+  <link rel="icon" type="image/png" href="assets/img/silentsystem.png">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body class="is-locked">
+
+<div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+  <div class="gate-card">
+    <img class="gate-logo" src="assets/img/silentsystem.png" alt="" width="56" height="56">
+    <h1 id="gateTitle">Mail <span class="brand-name">SILENTSYSTEM<sup>®</sup></span></h1>
+    <p>Accesso riservato. Inserisci la password.</p>
+    <form id="gateForm" autocomplete="off">
+      <label for="gatePassword">Password</label>
+      <input id="gatePassword" type="password" autocomplete="current-password" placeholder="Password" required>
+      <button type="submit" class="btn btn-primary">Entra</button>
+      <p class="gate-error" id="gateError" role="alert" hidden>Password non corretta.</p>
+    </form>
+  </div>
+</div>
+
+<header class="topbar">
+  <div class="shell topbar-inner">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <img src="assets/img/silentsystem.png" alt="" width="46" height="46">
+      </span>
+      <span class="brand-text">
+        <strong>Mail <span class="brand-name">SILENTSYSTEM<sup>®</sup></span></strong>
+        <small>Offerte, resi, ritiri e cauzioni</small>
+      </span>
+    </div>
+    <div class="topbar-actions">
+      <button type="button" class="btn btn-quiet" id="lock">Blocca</button>
+      <button type="button" class="btn btn-quiet" id="reset">Azzera</button>
+    </div>
+  </div>
+</header>
+
+<main class="shell layout">
+
+  <section class="composer" aria-label="Composizione della mail">
+
+    <section class="card">
+      <div class="card-head">
+        <span class="step" aria-hidden="true">1</span>
+        <div>
+          <h2>La mail</h2>
+          <p>Scegli cosa inviare e a chi.</p>
+        </div>
+      </div>
+
+      <div class="fields">
+        <div class="field field--wide">
+          <span class="field-label" id="templateLabel">Tipo di mail</span>
+          <div class="segmented segmented--four" role="group" aria-labelledby="templateLabel">
+            <button type="button" data-template="offerta" aria-pressed="true">Offerta</button>
+            <button type="button" data-template="reso" aria-pressed="false">Reso guasti</button>
+            <button type="button" data-template="ritiro" aria-pressed="false">Ritiro noleggio</button>
+            <button type="button" data-template="cauzione" aria-pressed="false">Cauzione</button>
+          </div>
+          <span class="help" id="templateHelp">Offerta di noleggio o acquisto con il preventivo in allegato.</span>
+        </div>
+
+        <div class="field" data-template-only="offerta">
+          <span class="field-label" id="tipoLabel">Tipo di offerta</span>
+          <div class="segmented" role="group" aria-labelledby="tipoLabel">
+            <button type="button" data-tipo="noleggio" aria-pressed="true">Noleggio</button>
+            <button type="button" data-tipo="acquisto" aria-pressed="false">Acquisto</button>
+          </div>
+          <span class="help">Cambia l'oggetto della mail.</span>
+        </div>
+
+        <div class="field" data-template-only="offerta">
+          <label for="origine">Da dove è arrivata la richiesta</label>
+          <select id="origine">
+            <option value="email">Email</option>
+            <option value="form">Modulo del sito</option>
+            <option value="telefono">Telefonata</option>
+            <option value="whatsapp">WhatsApp</option>
+            <option value="cliente">Cliente che torna da noi</option>
+          </select>
+        </div>
+
+        <div class="field field--wide">
+          <label for="cliente">Nome del cliente <span class="opt">facoltativo</span></label>
+          <input id="cliente" type="text" autocomplete="off" placeholder="Mario Rossi">
+          <span class="help" id="clienteHelp">Se lo compili, il saluto diventa «Salve Mario Rossi,».</span>
+        </div>
+
+        <div class="field field--wide">
+          <label for="nome">Il tuo nome</label>
+          <input id="nome" type="text" autocomplete="off" placeholder="Il tuo nome">
+          <span class="help">Compare dopo i saluti. Resta salvato su questo computer.</span>
+        </div>
+
+        <div class="field field--wide" id="offertaField" hidden>
+          <label for="offerta">Numero offerta</label>
+          <input id="offerta" type="text" inputmode="numeric" autocomplete="off" placeholder="Il numero dell'offerta">
+          <span class="help" id="offertaHelp">Compare nell'oggetto e nel testo della mail.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" data-template-only="offerta">
+      <div class="card-head">
+        <span class="step" aria-hidden="true">2</span>
+        <div>
+          <h2>Il materiale</h2>
+          <p>I trasmettitori nel menu sono solo quelli compatibili con le cuffie scelte.</p>
+        </div>
+      </div>
+
+      <div class="fields">
+        <div class="field">
+          <label for="cuffie">Cuffie</label>
+          <select id="cuffie"></select>
+        </div>
+
+        <div class="field">
+          <label for="tx">Trasmettitore</label>
+          <select id="tx"></select>
+        </div>
+
+        <div class="field field--wide">
+          <label for="raggio">Raggio d'azione (metri)</label>
+          <input id="raggio" type="number" min="0" step="10" placeholder="Se non lo sai, lascia vuoto">
+          <span class="help" id="raggioHint"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" data-template-only="ritiro">
+      <div class="card-head">
+        <span class="step" aria-hidden="true">2</span>
+        <div>
+          <h2>Il ritiro</h2>
+          <p>Come rientra il materiale, quanti colli e dove.</p>
+        </div>
+      </div>
+
+      <div class="fields">
+        <div class="field field--wide">
+          <span class="field-label" id="ritiroModoLabel">Modalità di ritiro</span>
+          <div class="segmented" role="group" aria-labelledby="ritiroModoLabel">
+            <button type="button" data-ritiro-modo="corriere" aria-pressed="true">Corriere DHL</button>
+            <button type="button" data-ritiro-modo="servicepoint" aria-pressed="false">Service point</button>
+          </div>
+          <span class="help" id="ritiroModoHelp">DHL passa a ritirare all'indirizzo indicato.</span>
+        </div>
+
+        <div class="field">
+          <label for="colli">Numero di colli</label>
+          <input id="colli" type="number" min="1" step="1" value="1">
+        </div>
+
+        <div class="field" id="ritiroDataField">
+          <label for="ritiroData">Data del ritiro</label>
+          <input id="ritiroData" type="date">
+        </div>
+
+        <div class="field" id="ritiroFasciaField">
+          <label for="ritiroFascia">Fascia DHL</label>
+          <select id="ritiroFascia">
+            <option value="pomeriggio">14:00 – 17:30</option>
+            <option value="mattina">10:00 – 13:00</option>
+          </select>
+        </div>
+
+        <div class="field" id="indirizzoTipoField">
+          <label for="indirizzoTipo">Indirizzo del ritiro</label>
+          <select id="indirizzoTipo">
+            <option value="stesso">Stesso indirizzo di consegna</option>
+            <option value="altro">Un altro indirizzo</option>
+          </select>
+        </div>
+
+        <div class="field field--wide" id="indirizzoAltroField" hidden>
+          <label for="indirizzoAltro">Indirizzo completo</label>
+          <textarea id="indirizzoAltro" rows="3" placeholder="Via e numero civico&#10;CAP e città&#10;Provincia"></textarea>
+          <span class="help">Scrivi un indirizzo per riga. Nel corpo diventa un blocco in grassetto, come l'indirizzo del reso.</span>
+        </div>
+
+        <div class="field" id="serviceTipoField" hidden>
+          <label for="serviceTipo">Quale service point</label>
+          <select id="serviceTipo">
+            <option value="stesso">Quello dove ha ritirato</option>
+            <option value="altro">Un altro</option>
+          </select>
+        </div>
+
+        <div class="field field--wide" id="servicePointField" hidden>
+          <label for="servicePoint">Service point</label>
+          <input id="servicePoint" type="text" autocomplete="off" placeholder="DHL Service Point Milano, Via ...">
+          <span class="help">Nome e indirizzo del punto. Se lo lasci vuoto compare [service point].</span>
+        </div>
+      </div>
+
+      <ul class="checks checks--bare">
+        <li>
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"></path></svg>
+          Ricordati di allegare le etichette DHL: la mail dice che sono qui.
+        </li>
+      </ul>
+    </section>
+
+    <section class="card" data-template-only="offerta">
+      <div class="card-head">
+        <span class="step" aria-hidden="true">3</span>
+        <div>
+          <h2>Prima di inviare</h2>
+          <p>Due controlli rapidi.</p>
+        </div>
+      </div>
+
+      <ul class="checks checks--bare">
+        <li>
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"></path></svg>
+          La firma include già i link a Video Eventi e Foto Eventi.
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"></path></svg>
+          Allega il PDF del preventivo prima di inviare.
+        </li>
+      </ul>
+    </section>
+
+  </section>
+
+  <aside class="output" aria-label="Risultato">
+    <div class="card output-card">
+
+      <div class="readout" aria-hidden="true" data-template-only="offerta">
+        <span class="readout-item">
+          <span class="readout-label">Tipo</span>
+          <strong class="readout-value" id="roTipo">NOLEGGIO</strong>
+        </span>
+        <span class="readout-item">
+          <span class="readout-label">Cuffie</span>
+          <strong class="readout-value" id="roCuffie">SX 839 V2 HiFi ®</strong>
+        </span>
+        <span class="readout-item">
+          <span class="readout-label">Trasmettitore</span>
+          <strong class="readout-value" id="roTx">TX-350 CH3</strong>
+        </span>
+        <span class="readout-item">
+          <span class="readout-label">Raggio</span>
+          <strong class="readout-value" id="roRaggio">500 m</strong>
+        </span>
+      </div>
+
+      <div class="output-head">
+        <div class="tabs" role="tablist" aria-label="Vista del messaggio">
+          <button type="button" class="tab is-active" data-tab="preview" role="tab" aria-selected="true">Anteprima</button>
+          <button type="button" class="tab" data-tab="text" role="tab" aria-selected="false">Testo</button>
+          <button type="button" class="tab" data-tab="source" role="tab" aria-selected="false">HTML</button>
+        </div>
+
+        <div class="subject-row">
+          <label for="subject">Oggetto</label>
+          <div class="subject-input">
+            <input id="subject" type="text" autocomplete="off" spellcheck="false">
+            <button type="button" class="icon-btn" id="copySubject" title="Copia l'oggetto" aria-label="Copia l'oggetto">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="11" height="11" rx="2"></rect>
+                <path d="M5 15V6a2 2 0 0 1 2-2h8"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="panels">
+        <div class="panel panel-preview" data-panel="preview">
+          <iframe id="preview" title="Anteprima della mail" loading="lazy"></iframe>
+        </div>
+        <div class="panel" data-panel="text" hidden>
+          <pre class="code" id="plainOut" tabindex="0"></pre>
+        </div>
+        <div class="panel" data-panel="source" hidden>
+          <pre class="code" id="htmlOut" tabindex="0"></pre>
+        </div>
+      </div>
+
+      <div class="output-actions">
+        <button type="button" class="btn btn-primary" id="openMail" title="Copia la mail formattata e apre il programma di posta: incolla nel corpo con ⌘V">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14 4h6v6"></path>
+            <path d="M20 4l-9 9"></path>
+            <path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"></path>
+          </svg>
+          Apri in Mail
+        </button>
+
+        <div class="copy-grid">
+          <button type="button" class="btn btn-soft" data-copy="text" title="Copia solo il corpo della mail, come testo semplice">Copia testo</button>
+          <button type="button" class="btn btn-soft" data-copy="rich" title="Copia la mail con la formattazione: incollala nel messaggio e grassetti e link restano">Copia HTML formattato</button>
+        </div>
+
+        <button type="button" class="btn btn-quiet btn-sm" data-copy="source" title="Copia il codice HTML completo, per i programmi che lo accettano">Copia codice HTML</button>
+
+        <p class="hint" id="mailHint">
+          «Apri in Mail» copia la mail formattata negli appunti e apre il messaggio con il solo oggetto,
+          perché il corpo lo incolli tu: premi ⌘V e grassetti e link restano.
+        </p>
+      </div>
+
+    </div>
+  </aside>
+
+</main>
+
+<footer class="shell footer">
+  <span>Tutto succede nel tuo browser: nessuna email viene inviata, nessun dato esce da qui.</span>
+  <span>La bozza resta salvata su questo computer.</span>
+  <span class="plate" aria-hidden="true">OUTATIME</span>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="assets/templates.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
