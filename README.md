@@ -13,7 +13,7 @@ Niente backend, niente dipendenze, niente build: file statici che girano anche o
 - **Saluto personalizzato**: con il nome del cliente la mail parte con «Salve Mario Rossi,» (offerta), «Gentile Mario Rossi,» (reso) o «Buongiorno/Buonasera Mario Rossi,» (ritiro e cauzione).
 - **Origine della richiesta**: email, modulo del sito, telefonata, WhatsApp o cliente che torna. Cambia solo la prima frase.
 - **Reso guasti**: testo, indirizzo del magazzino e pulsante arancione «RESO GUASTI» verso il form, senza barra di citazione.
-- **Ritiro noleggio**: numero offerta che finisce nell'oggetto «Ritiro Noleggio Cuffie - OFFERTA …», corriere DHL o consegna al DHL Service Point (lo stesso del ritiro o uno specifico, con link al locator), data e fascia DHL, numero di colli (singolare/plurale automatico), indirizzo di consegna o alternativo in grassetto, pulsante «CAUZIONE». Il saluto diventa «Buonasera» dopo le 18 e il venerdì chiude con «buon weekend».
+- **Ritiro noleggio**: numero offerta che finisce nell'oggetto «Ritiro Noleggio Cuffie - OFFERTA …», corriere DHL o consegna al DHL Service Point (lo stesso del ritiro o uno specifico, con link al locator e orari personalizzabili), data e fascia DHL, numero di colli (singolare/plurale automatico), indirizzo di consegna o alternativo in grassetto, pulsante «CAUZIONE». Il saluto diventa «Buonasera» dopo le 18 e il venerdì chiude con «buon weekend».
 - **Cauzione**: promemoria per chi non ha compilato il form della restituzione, con numero offerta nell'oggetto e nel testo e pulsante «CAUZIONE».
 - **Oggetto** modificabile, con copia dedicata.
 - **Anteprima**, **testo** e **codice HTML** affiancati.
@@ -27,7 +27,7 @@ Niente backend, niente dipendenze, niente build: file statici che girano anche o
 2. Scegli il tipo di mail: Offerta, Reso guasti, Ritiro noleggio o Cauzione.
 3. Per l'offerta: scegli noleggio o acquisto, la provenienza e, se lo hai, il nome del cliente; poi cuffie e trasmettitore. Il raggio si compila da solo.
 4. Per il reso: basta il nome del cliente, se lo hai. Testo e pulsante sono già pronti.
-5. Per il ritiro: inserisci il numero offerta (va nell'oggetto), scegli corriere DHL o service point, poi data e fascia, numero di colli e indirizzo (stesso o alternativo). Saluto e weekend si calcolano dall'ora e dal giorno.
+5. Per il ritiro: inserisci il numero offerta (va nell'oggetto), scegli corriere DHL o service point, poi data e fascia, numero di colli, indirizzo (stesso o alternativo) e orari del service point. Saluto e weekend si calcolano dall'ora e dal giorno.
 6. Per la cauzione: inserisci il numero offerta. Il resto è già scritto.
 7. Scrivi il tuo nome: compare dopo i saluti in tutte le mail. Controlla oggetto e anteprima.
 8. Copia il messaggio o aprilo nel programma di posta. Per l'offerta allega il PDF del preventivo; per il ritiro allega le etichette DHL.

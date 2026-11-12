@@ -4,6 +4,7 @@
 
   var O = window.OFFERTA;
   var KEY = 'mail-offerta-draft.v1';
+  var ORARI_DEFAULT = '08:30 – 12:30 e 15:00 – 19:00';
 
   var state = {
     template: 'offerta',
@@ -24,6 +25,7 @@
     indirizzoAltro: '',
     serviceTipo: 'stesso',
     servicePoint: '',
+    serviceOrari: ORARI_DEFAULT,
   };
 
   var current = { subject: '', text: '', html: '' };
@@ -71,6 +73,8 @@
       state.indirizzoAltro = typeof saved.indirizzoAltro === 'string' ? saved.indirizzoAltro : '';
       state.serviceTipo = saved.serviceTipo === 'altro' ? 'altro' : 'stesso';
       state.servicePoint = typeof saved.servicePoint === 'string' ? saved.servicePoint : '';
+      state.serviceOrari =
+        typeof saved.serviceOrari === 'string' ? saved.serviceOrari : ORARI_DEFAULT;
       if (state.subjectOverride === 'Prego inviare riscontro di avvenuta ricezione') {
         state.subjectOverride = '';
       }
@@ -101,6 +105,7 @@
     byId('indirizzoTipoField').hidden = !corriere;
     byId('indirizzoAltroField').hidden = !corriere || state.indirizzoTipo !== 'altro';
     byId('serviceTipoField').hidden = corriere;
+    byId('serviceOrariField').hidden = corriere;
     byId('servicePointField').hidden = corriere || state.serviceTipo !== 'altro';
 
     var buttons = document.querySelectorAll('[data-ritiro-modo]');
@@ -474,7 +479,8 @@
       state.origine !== 'email' || state.cuffie !== 0 || state.tipo !== 'noleggio' ||
       state.template !== 'offerta' || state.ritiroData || state.colli !== '1' ||
       state.ritiroModo !== 'corriere' || state.offerta || state.indirizzoTipo !== 'stesso' ||
-      state.indirizzoAltro || state.serviceTipo !== 'stesso' || state.servicePoint;
+      state.indirizzoAltro || state.serviceTipo !== 'stesso' || state.servicePoint ||
+      state.serviceOrari !== ORARI_DEFAULT;
     if (hasContent && !window.confirm('Azzerare i campi e ricominciare da zero?')) return;
 
     state = {
@@ -496,6 +502,7 @@
       indirizzoAltro: '',
       serviceTipo: 'stesso',
       servicePoint: '',
+      serviceOrari: ORARI_DEFAULT,
     };
 
     try {
@@ -516,6 +523,7 @@
     byId('indirizzoAltro').value = '';
     byId('serviceTipo').value = 'stesso';
     byId('servicePoint').value = '';
+    byId('serviceOrari').value = ORARI_DEFAULT;
 
     applyTemplate();
     renderTipo();
@@ -657,6 +665,13 @@
 
     if (target.id === 'servicePoint') {
       state.servicePoint = target.value;
+      save();
+      render();
+      return;
+    }
+
+    if (target.id === 'serviceOrari') {
+      state.serviceOrari = target.value;
       save();
       render();
     }
@@ -839,6 +854,7 @@
   byId('indirizzoAltro').value = state.indirizzoAltro;
   byId('serviceTipo').value = state.serviceTipo;
   byId('servicePoint').value = state.servicePoint;
+  byId('serviceOrari').value = state.serviceOrari;
 
   applyTemplate();
   renderTipo();

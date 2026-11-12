@@ -262,6 +262,9 @@ window.OFFERTA = (function () {
     var modo = state.ritiroModo === 'servicepoint' ? 'servicepoint' : 'corriere';
     var serviceTipo = state.serviceTipo === 'altro' ? 'altro' : 'stesso';
     var servicePoint = String(state.servicePoint || '').trim();
+    var serviceOrari = String(state.serviceOrari || '').trim();
+    var orariTesto = serviceOrari ? ' (orari: ' + serviceOrari + ')' : '';
+    var orariHtml = serviceOrari ? ' (orari: ' + esc(serviceOrari) + ')' : '';
 
     var etichette = plurale
       ? 'allego qui le etichette di ritiro delle cuffie, da far stampare e attaccare sui colli chiusi.'
@@ -306,6 +309,7 @@ window.OFFERTA = (function () {
             collo +
             ' presso il seguente DHL Service Point: ' +
             (servicePoint || '[service point]') +
+            orariTesto +
             '.'
         );
         testo.push('');
@@ -316,7 +320,9 @@ window.OFFERTA = (function () {
         testo.push(
           'Può riportare ' +
             collo +
-            ' presso lo stesso DHL Service Point dove l’ha ritirato (orari: 08:30 – 12:30 e 15:00 – 19:00).'
+            ' presso lo stesso DHL Service Point dove l’ha ritirato' +
+            orariTesto +
+            '.'
         );
       }
     } else {
@@ -360,6 +366,7 @@ window.OFFERTA = (function () {
           collo +
           ' presso il seguente DHL Service Point: ' +
           esc(servicePoint || '[service point]') +
+          orariHtml +
           '.</p>';
         html +=
           P +
@@ -371,7 +378,9 @@ window.OFFERTA = (function () {
           P +
           'Può riportare ' +
           collo +
-          ' presso lo stesso DHL Service Point dove l’ha ritirato (orari: 08:30 – 12:30 e 15:00 – 19:00).</p>';
+          ' presso lo stesso DHL Service Point dove l’ha ritirato' +
+          orariHtml +
+          '.</p>';
       }
     } else {
       html +=
